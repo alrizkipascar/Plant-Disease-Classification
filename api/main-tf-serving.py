@@ -10,7 +10,7 @@ import requests
 
 app = FastAPI()
 endpoint = "http://localhost:8501/v1/models/potatoes_model:predict"
-MODEL = tf.keras.models.load_model("../Potatoe-Disease-Classification/models/1")
+#MODEL = tf.keras.models.load_model("../Potatoe-Disease-Classification/models/1")
 CLASS_NAMES = ["Early Blight", "Late Blight","Healthy"]
 origins = [
     "http://localhost",
@@ -47,7 +47,7 @@ async def predict(
 
     response = requests.post(endpoint, json=json_data)
     predictions = np.array(response.json()["predictions"][0])
-    predicted_class = CLASS_NAMES[np.argmax(predictions[0])]
+    predicted_class = CLASS_NAMES[np.argmax(predictions)]
     confidence = np.max(predictions[0])
     return {
         'class': predicted_class,
